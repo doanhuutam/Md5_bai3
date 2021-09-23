@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let a of product">
+  <tr *ngFor="let a of products">
     <td>{{a.name}}</td>
     <td><img src="{{a.img}}" width="300" height="200"></td>
     <td>{{a.price}}</td>
@@ -76,7 +76,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        nhập tên:<input [(ngModel)]="name" placeholder="nhập tên ">
+        nhập tên:<input [(ngModel)]="name" placeholder="nhập tên " readonly>
         <br>
         nhập giá :<input [(ngModel)]="price" placeholder="nhập giá ">
         <br>

@@ -1,16 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Product} from "../model/product";
 
-class Product {
-  name: string;
-  price: number;
-  img: string;
-
-  constructor(name: string, price: number, img: string) {
-    this.name = name;
-    this.price = price;
-    this.img = img;
-  }
-}
 
 @Component({
   selector: 'app-product',
@@ -18,49 +8,54 @@ class Product {
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  product: Product[] = [];
+  @Input()
+  products: Product[] = [];
   name: string = "";
   price: number = 0;
   img: string = "";
 
   constructor() {
-    this.product.push(new Product("doantam", 112, "112"));
   }
 
   ngOnInit(): void {
   }
+@Output()deletePr=new EventEmitter();
 
   delete(name: string) {
-    for (let i = 0; i < this.product.length; i++) {
-      if (this.product[i].name === name) {
-        this.product.splice(i, 1);
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].name === name) {
+        this.deletePr.emit(i)
         return;
       }
     }
   }
-
+@Output()createPr=new EventEmitter();
   create() {
-    this.product.push(new Product(this.name, this.price, this.img));
-    this.name = '';
-    this.img = '';
-    this.price = 0;
+    let a =new Product(this.name,this.price,this.img)
+    this.createPr.emit(a);
+    this.name= "";
+    this.price= 0;
+    this.img= "";
+
   }
 
   show(name: string) {
-    for (let i = 0; i < this.product.length; i++) {
-      if (this.product[i].name === name) {
-        this.name = this.product[i].name;
-        this.img = this.product[i].img;
-        this.price = this.product[i].price;
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].name === name) {
+        this.name = this.products[i].name;
+        this.img = this.products[i].img;
+        this.price = this.products[i].price;
         return;
       }
     }
 
   }
+  @Output()editPr=new EventEmitter();
+
   edit(name: string) {
-    for (let i = 0; i < this.product.length; i++) {
-      if (this.product[i].name === name) {
-        this.product[i] = new Product(this.name, this.price, this.img);
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].name==name) {
+        this.products[i] = new Product(this.name, this.price, this.img);
         this.name = '';
         this.img = '';
         this.price = 0;
